@@ -1,11 +1,12 @@
 package com.example.docservice.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "users")
 public class UserNameEntity {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -13,5 +14,8 @@ private Long userId;
 private String firstname;
 private String patronymic;
 private String lastname;
+
+    public UserNameEntity() {
+    }
 
 }

@@ -2,6 +2,8 @@ package com.example.docservice.repository;
 
 import com.example.docservice.entity.UserAddressEntity;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 
 public interface UserCrudAddressRepository extends CrudRepository <UserAddressEntity,Long> {
     UserAddressEntity findByCountry (String country);

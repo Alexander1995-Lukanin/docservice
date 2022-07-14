@@ -1,18 +1,24 @@
 package com.example.docservice.entity;
 
-import lombok.Data;
+
+
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "userDocuments")
 public class UserDocumentsEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "user_doc_id")
     private Long userDocId;
     private String passport;
     private String pensionCertificate;
     private String  medicalPolicy;
+
+    public UserDocumentsEntity() {
+    }
 }

@@ -1,12 +1,16 @@
 package com.example.docservice.entity;
 
-import lombok.Data;
+
+
+
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "userAddress")
 public class UserAddressEntity {
     @Id
     @GeneratedValue()
@@ -17,4 +21,9 @@ public class UserAddressEntity {
     private String street;
     private String house;
     private String flat;
+
+    public UserAddressEntity() {
+    }
+
+
 }
