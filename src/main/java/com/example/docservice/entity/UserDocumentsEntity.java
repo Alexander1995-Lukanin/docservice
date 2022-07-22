@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Table (name = "UsersDocuments")
 public class UserDocumentsEntity {
 
     @Id
@@ -18,6 +19,9 @@ public class UserDocumentsEntity {
     private String passport;
     private String pensionCertificate;
     private String  medicalPolicy;
+    @OneToOne
+    @JoinColumn (name = "userId")
+    private UserEntity userName;
 
     public UserDocumentsEntity() {
     }

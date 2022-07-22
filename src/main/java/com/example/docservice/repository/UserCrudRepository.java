@@ -1,13 +1,18 @@
 package com.example.docservice.repository;
 
-import com.example.docservice.entity.UserNameEntity;
+import com.example.docservice.entity.UserAddressEntity;
+import com.example.docservice.entity.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 
-public interface UserCrudRepository extends CrudRepository<UserNameEntity,Long> {
-    UserNameEntity findByUserFirstName (String username);
-    UserNameEntity findByUserPatronymic (String username);
-    UserNameEntity findByUserLastName (String username);
-
+@Repository
+public interface UserCrudRepository extends CrudRepository<UserEntity,Long> {
+    UserEntity findByUserId (Long userID);
+    UserEntity findByFirstName (String username);
+    UserEntity findByPatronymic (String username);
+    UserEntity findByLastName (String username);
+    List<UserEntity> findAllByLastName(String str);
 }
+
