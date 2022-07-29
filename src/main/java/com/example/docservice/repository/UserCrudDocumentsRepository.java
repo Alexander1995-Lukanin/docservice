@@ -9,4 +9,5 @@ public interface UserCrudDocumentsRepository extends CrudRepository <UserDocumen
     UserDocumentsEntity findByPassport (String Passport);
     UserDocumentsEntity   findByPensionCertificate (String PensionCertificate);
     UserDocumentsEntity findByMedicalPolicy (String medicalPolicy);
+  //  UserDocumentsEntity findByUserDoc (UserEntity userDoc);
 }

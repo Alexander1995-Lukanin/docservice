@@ -53,7 +53,7 @@ public class UserService implements UserInterfaceService {
             throw new UserIncorrectDataEntryException("Введены некоректные данные");
         }
         UserEntity newUserAddress = userRepo.findById(userId).get();
-        userAddChange.setUserName(newUserAddress);
+        userAddChange.setUserAdd(newUserAddress);
         return UserAddModel.toModel(userAddRepo.save(userAddChange)) ;
     }
     //Изменение данных документов
@@ -62,8 +62,8 @@ public class UserService implements UserInterfaceService {
         if (userDocChange == null) {
             throw new UserIncorrectDataEntryException("Введены некоректные данные");
         }
-        UserEntity UserAddress = userRepo.findById(userId).get();
-        userDocChange.setUserName(UserAddress);
+        UserEntity User= userRepo.findById(userId).get();
+        userDocChange.setUserDoc(User);
         return UserDocModel.toModel(userDocRepo.save(userDocChange)) ;
     }
 

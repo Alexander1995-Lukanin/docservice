@@ -3,8 +3,7 @@ package com.example.docservice.entity;
 
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +11,9 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table (name = "UsersAddress")
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = {"userAddressId"})
 public class UserAddressEntity {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -23,11 +25,8 @@ public class UserAddressEntity {
     private String house;
     private String flat;
     @ManyToOne
-    @JoinColumn (name = "userId")
-    private UserEntity userName;
-
-    public UserAddressEntity() {
-    }
+   // @JoinColumn (name = "userId")
+    private UserEntity userAdd;
 
 
 }

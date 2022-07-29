@@ -16,7 +16,7 @@ public class UserAddressController {
     }
 
     @PutMapping("/change/{id}")
-    public ResponseEntity changeUserAddress (@RequestBody UserAddressEntity changeUserAddress, @PathVariable Long userId) {
+    public ResponseEntity <?> changeUserAddress (@RequestBody UserAddressEntity changeUserAddress, @PathVariable Long userId) {
         try {
             userService.changeUserAddress(changeUserAddress, userId);
             return ResponseEntity.ok("Данные о адрессе пользователя успешно изменены");

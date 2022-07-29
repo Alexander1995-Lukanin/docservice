@@ -17,7 +17,7 @@ public class UserController {
     }
     /*Регистрация пользователя в базу данных*/
     @PostMapping("/registration")
-    public ResponseEntity registrationUser(@RequestBody UserEntity user) {
+    public ResponseEntity <?> registrationUser(@RequestBody UserEntity user) {
         try {
             userService.registrationUser(user);
             return ResponseEntity.ok("Пользователь успешно добавлен");
@@ -27,7 +27,7 @@ public class UserController {
     }
     /*Изменение пользователя в базе данных*/
     @PutMapping("/change/{id}")
-    public ResponseEntity changeUserName(@RequestBody UserEntity user, Long id) {
+    public ResponseEntity <?> changeUserName(@RequestBody UserEntity user, @PathVariable Long id) {
         try {
             userService.changeUserName(user,id);
             return ResponseEntity.ok("Данные пользователя успешно изменены");
@@ -37,17 +37,17 @@ public class UserController {
     }
 
     @GetMapping("/name/{id}")
-    public ResponseEntity getUsers(@PathVariable Long id) {
+    public ResponseEntity <?> getUsers(@PathVariable Long id) {
         try {
-
-            return ResponseEntity.ok(  userService.getUsernameById(id));
+            userService.getUsernameById(id);
+            return ResponseEntity.ok("Все ок");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Произошла ошибка");
         }
     }
 
     @DeleteMapping(("/delete/{id}"))
-    public ResponseEntity DeleteUsers(@PathVariable Long id) {
+    public ResponseEntity <?> DeleteUsers(@PathVariable Long id) {
 
         try {
             userService.deleteUser(id);
@@ -57,8 +57,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/name/{lastName}")
-    public ResponseEntity getUsernameByLastName(@PathVariable String lastName) {
+    @GetMapping("/lastName/{lastName}")
+    public ResponseEntity <?> getUsernameLastName(@PathVariable String lastName) {
         try {
             userService.getUsernameByLastName(lastName);
             return ResponseEntity.ok("Данные пользователя успешно переданы");

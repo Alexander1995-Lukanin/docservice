@@ -12,6 +12,7 @@ public interface UserCrudAddressRepository extends CrudRepository <UserAddressEn
     UserAddressEntity findByStreet (String street);
     UserAddressEntity findByHouse (String house);
     UserAddressEntity findByFlat(String flat);
+   // UserAddressEntity  findByUserAdd (UserEntity userAdd);
 
 
 }

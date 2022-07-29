@@ -1,7 +1,6 @@
 package com.example.docservice.model;
 
 import com.example.docservice.entity.UserAddressEntity;
-import com.example.docservice.entity.UserDocumentsEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

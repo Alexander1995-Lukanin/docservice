@@ -2,8 +2,7 @@ package com.example.docservice.entity;
 
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +10,9 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table (name = "UsersDocuments")
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode (of = {"passport"})
 public class UserDocumentsEntity {
 
     @Id
@@ -20,9 +22,7 @@ public class UserDocumentsEntity {
     private String pensionCertificate;
     private String  medicalPolicy;
     @OneToOne
-    @JoinColumn (name = "userId")
-    private UserEntity userName;
+    //@JoinColumn (name = "userId")
+    private UserEntity userDoc;
 
-    public UserDocumentsEntity() {
-    }
 }

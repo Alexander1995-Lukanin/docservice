@@ -16,7 +16,7 @@ public class UserDocumentController {
     }
 
     @PutMapping("/change/{id}")
-    public ResponseEntity changeUserDocuments(@RequestBody UserDocumentsEntity userDocuments, @PathVariable Long userId) {
+    public ResponseEntity <?> changeUserDocuments(@RequestBody UserDocumentsEntity userDocuments, @PathVariable Long userId) {
         try {
             userService.changeUserDocuments(userDocuments, userId);
             return ResponseEntity.ok("Данные документов успешно изменены");
