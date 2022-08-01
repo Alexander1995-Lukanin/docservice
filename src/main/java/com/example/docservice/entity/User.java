@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-
+//Эксепшен хендлер
 @Entity
 @BatchSize(size = 5)
 @Table(name = "UsersName")
@@ -32,6 +32,7 @@ public class User {
     @Size(min = 2, max = 20, message = "Patronymic name should  be between 2 and 20 characters")
     private String lastName;
     //Ленивая загрузка и транзакции
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userAdd", orphanRemoval = true)
     private List<Address> userAddress;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "userDoc", orphanRemoval = true)
