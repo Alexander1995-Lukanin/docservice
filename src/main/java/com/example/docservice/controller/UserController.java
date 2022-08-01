@@ -1,70 +1,51 @@
 package com.example.docservice.controller;
 
 
-import com.example.docservice.entity.UserEntity;
-import com.example.docservice.service.UserService;
-import org.springframework.http.ResponseEntity;
+import com.example.docservice.entity.User;
+import com.example.docservice.exception.UserIncorrectDataEntryException;
+import com.example.docservice.exception.UserNotFaundException;
+import com.example.docservice.service.UserServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
-    public UserController(UserService userService) {
+
+    public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
+
     /*Регистрация пользователя в базу данных*/
-    @PostMapping("/registration")
-    public ResponseEntity <?> registrationUser(@RequestBody UserEntity user) {
-        try {
+    @PostMapping("/users")
+    public void registrationUser (@RequestBody User user) throws UserIncorrectDataEntryException {
             userService.registrationUser(user);
-            return ResponseEntity.ok("Пользователь успешно добавлен");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка");
-        }
-    }
-    /*Изменение пользователя в базе данных*/
-    @PutMapping("/change/{id}")
-    public ResponseEntity <?> changeUserName(@RequestBody UserEntity user, @PathVariable Long id) {
-        try {
-            userService.changeUserName(user,id);
-            return ResponseEntity.ok("Данные пользователя успешно изменены");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка");
-        }
     }
 
-    @GetMapping("/name/{id}")
-    public ResponseEntity <?> getUsers(@PathVariable Long id) {
-        try {
-            userService.getUsernameById(id);
-            return ResponseEntity.ok("Все ок");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка");
-        }
+    // Получение пользователя по ID
+    @GetMapping("/users/{userId}")
+    public User getUsers(@PathVariable Long userId) throws UserNotFaundException {
+           return userService.getUserById(userId);
     }
-
-    @DeleteMapping(("/delete/{id}"))
-    public ResponseEntity <?> DeleteUsers(@PathVariable Long id) {
-
-        try {
-            userService.deleteUser(id);
-            return ResponseEntity.ok("Данные пользователя успешно удалены");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка");
-        }
+    // Получение всех пользователей
+    @GetMapping("/users")
+    public List<User> getUsers() throws  UserIncorrectDataEntryException {
+            return userService.getUserAll();
     }
-
-    @GetMapping("/lastName/{lastName}")
-    public ResponseEntity <?> getUsernameLastName(@PathVariable String lastName) {
-        try {
-            userService.getUsernameByLastName(lastName);
-            return ResponseEntity.ok("Данные пользователя успешно переданы");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка");
-        }
+    // Удаление пользователя по ID
+    @DeleteMapping(("/users/{userId}"))
+    public void DeleteUsers(@PathVariable Long userId) throws UserIncorrectDataEntryException {
+            userService.deleteUser(userId);
+    }
+    //Получение пользователя по фамилии
+    @GetMapping("/users/lastName/{lastName}")
+    public List<User>  getUsernameLastName(@PathVariable String lastName) throws  UserIncorrectDataEntryException {
+        List<User> users=  userService.getUserByLastName(lastName);
+        return users;
     }
 
 }

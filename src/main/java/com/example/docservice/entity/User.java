@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"userId"})
-public class UserEntity {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -20,8 +20,8 @@ public class UserEntity {
     private String patronymic;
     private String lastName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userAdd",orphanRemoval = true)
-    private List<UserAddressEntity> userAddress;
+    private List<Address> userAddress;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "userDoc",orphanRemoval = true)
-    private UserDocumentsEntity userDocuments;
+    private Documents userDocuments;
 
 }

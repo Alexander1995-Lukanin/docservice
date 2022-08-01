@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode (of = {"passport"})
-public class UserDocumentsEntity {
+public class Documents {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,6 @@ public class UserDocumentsEntity {
     private String  medicalPolicy;
     @OneToOne
     //@JoinColumn (name = "userId")
-    private UserEntity userDoc;
+    private User userDoc;
 
 }

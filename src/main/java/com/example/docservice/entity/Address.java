@@ -1,8 +1,5 @@
 package com.example.docservice.entity;
 
-
-
-
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"userAddressId"})
-public class UserAddressEntity {
+public class Address {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long userAddressId;
@@ -25,8 +22,7 @@ public class UserAddressEntity {
     private String house;
     private String flat;
     @ManyToOne
-   // @JoinColumn (name = "userId")
-    private UserEntity userAdd;
+    private User userAdd;
 
 
 }
