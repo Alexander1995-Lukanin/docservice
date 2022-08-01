@@ -7,11 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserCrudRepository extends JpaRepository<User,Long> {
-//    @Query("select u from employees u where employees.users.FirstName in :FirstName") @Param("FirstName") Iterable<String> FirstName
-    public   List<User> findAllByLastName(String lastName);
-
-
+public interface UserCrudRepository extends JpaRepository<User, Long> {
+    List<User> findAllByLastName(String lastName);
 
 
 }

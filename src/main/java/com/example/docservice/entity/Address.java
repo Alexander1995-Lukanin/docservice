@@ -7,14 +7,15 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table (name = "UsersAddress")
+@Table(name = "UsersAddress")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"userAddressId"})
 public class Address {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userAddressId;
+
     private String country;
     private String region;
     private String city;
