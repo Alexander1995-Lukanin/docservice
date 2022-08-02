@@ -1,3 +1,4 @@
 rootProject.name = 'docservice'
 //include 'webclient'
+include 'Web_client'
 

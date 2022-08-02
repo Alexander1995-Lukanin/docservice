@@ -7,27 +7,39 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
-import org.springframework.web.bind.annotation.GetMapping;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
 public interface UserService {
 
     //Post UserRegistration
-    public void registrationUser(User userName) throws UserIncorrectDataEntryException;
+    void registrationUser(User userName) throws UserIncorrectDataEntryException;
 
     //Get UserByID
-    public User getUserById(Long UserId) throws UserNotFaundException;
+    User getUserById(Long UserId) throws UserNotFaundException;
 
     //Get UserALL
-    public Page<User> getUserAll(Pageable pageable) throws UserIncorrectDataEntryException;
+    Page<User> getUserAll(Pageable pageable);
 
-    public Page<User> findAllUsersSortedByName(@SortDefault(sort = "name",
-            direction = Sort.Direction.ASC) Pageable pageable) throws UserIncorrectDataEntryException;
+    Page<User> findAllUsersSortedByFirstName(@SortDefault(sort = "firstName",
+            direction = Sort.Direction.ASC) Pageable pageable);
 
     //Put User
-    public List<User> getUserByLastName(String LastName) throws UserIncorrectDataEntryException;
+    List<User> getUserByLastName(String LastName);
 
-    public void deleteUser(Long userId) throws UserIncorrectDataEntryException;
+    void deleteUser(Long userId) throws UserNotFaundException;
+
+    //WebClient
+    Mono<User> getUserByIdAsync(final String id);
+
+    User getUserByIdSync(final String id);
+
+    User getUserWithRetry(final String id);
+
+    User getUserWithFallback(final String id);
+
+    User getUserWithErrorHandling(final String id);
 
 }
+

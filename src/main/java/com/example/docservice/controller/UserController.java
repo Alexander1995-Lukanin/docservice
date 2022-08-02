@@ -10,7 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -35,26 +37,38 @@ public class UserController {
     // Получение пользователя по ID
     @GetMapping("/users/{userId}")
     public User getUsers(@PathVariable Long userId) throws UserNotFaundException {
-        return userService.getUserById(userId);
+        try {
+            return userService.getUserById(userId);
+        }
+        catch (UserNotFaundException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "User Not Found", exc);
+        }
     }
 
     // Получение всех пользователей
     @GetMapping("/users")
-    public Page<User> getUsers(@PageableDefault(value = 2, page = 0, size = 10) Pageable pageable) throws UserIncorrectDataEntryException {
-
+    public Page<User> getUsers(@PageableDefault(value = 2, page = 0, size = 10) Pageable pageable) {
         return userService.getUserAll(pageable);
     }
 
     //Spring exception handler посмотреть
     // Удаление пользователя по ID
     @DeleteMapping(("/users/{userId}"))
-    public void DeleteUsers(@PathVariable Long userId) throws UserIncorrectDataEntryException {
-        userService.deleteUser(userId);
+    public void DeleteUsers(@PathVariable Long userId) {
+        try {
+            userService.deleteUser(userId);
+        }
+        catch (UserNotFaundException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "User Not Found", exc);
+        }
+
     }
 
     //Получение пользователя по фамилии
     @GetMapping("/users/lastName/{lastName}")
-    public List<User> getUsernameLastName(@PathVariable String lastName) throws UserIncorrectDataEntryException {
+    public List<User> getUsernameLastName(@PathVariable String lastName)  {
         List<User> users = userService.getUserByLastName(lastName);
         return users;
     }
@@ -62,7 +76,7 @@ public class UserController {
     @GetMapping("/sortedusers")
     public Page<User> findAllUsersSortedByName(@SortDefault(sort = "name",
             direction = Sort.Direction.ASC) @PageableDefault(value = 2, page = 0, size = 10) Pageable pageable) throws UserIncorrectDataEntryException {
-        return userService.findAllUsersSortedByName(pageable);
+        return userService.findAllUsersSortedByFirstName(pageable);
     }
 
 
