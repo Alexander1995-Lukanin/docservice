@@ -1,4 +1,4 @@
-package com.example.docservice.webClient;
+package com.example.docservice.webClient.conf;
 
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
@@ -10,13 +10,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 import reactor.netty.tcp.TcpClient;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class WebClientConfiguration {
-    private static final String BASE_URL = "https://localhost:8098/";
+    private static final String BASE_URL = "https://localhost:8099/";
     public static final int TIMEOUT = 1000;
-
     @Bean
     public WebClient webClientWithTimeout() {
         final var tcpClient = TcpClient

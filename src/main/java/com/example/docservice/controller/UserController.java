@@ -3,16 +3,14 @@ package com.example.docservice.controller;
 
 import com.example.docservice.entity.User;
 import com.example.docservice.exception.UserIncorrectDataEntryException;
-import com.example.docservice.exception.UserNotFaundException;
 import com.example.docservice.service.UserServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,20 +28,15 @@ public class UserController {
 
     /*Регистрация пользователя в базу данных*/
     @PostMapping("/users")
-    public void registrationUser(@RequestBody @Valid User user) throws UserIncorrectDataEntryException {
+    public ResponseEntity<?> registrationUser(@RequestBody @Valid User user)  {
         userService.registrationUser(user);
+        return ResponseEntity.ok("Пользователь успешно зарегистрировася");
     }
 
     // Получение пользователя по ID
     @GetMapping("/users/{userId}")
-    public User getUsers(@PathVariable Long userId) throws UserNotFaundException {
-        try {
+    public User getUsers(@PathVariable Long userId) {
             return userService.getUserById(userId);
-        }
-        catch (UserNotFaundException exc) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "User Not Found", exc);
-        }
     }
 
     // Получение всех пользователей
@@ -55,15 +48,9 @@ public class UserController {
     //Spring exception handler посмотреть
     // Удаление пользователя по ID
     @DeleteMapping(("/users/{userId}"))
-    public void DeleteUsers(@PathVariable Long userId) {
-        try {
+    public ResponseEntity<?> DeleteUsers(@PathVariable Long userId) {
             userService.deleteUser(userId);
-        }
-        catch (UserNotFaundException exc) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "User Not Found", exc);
-        }
-
+        return ResponseEntity.ok("Пользователь успешно зарегистрировася");
     }
 
     //Получение пользователя по фамилии
@@ -72,9 +59,9 @@ public class UserController {
         List<User> users = userService.getUserByLastName(lastName);
         return users;
     }
-
-    @GetMapping("/sortedusers")
-    public Page<User> findAllUsersSortedByName(@SortDefault(sort = "name",
+//Сортировки по имени
+    @GetMapping("/sorted")
+    public Page<User> findAllUsersSortedByName(@Valid @SortDefault(sort = "firstName",
             direction = Sort.Direction.ASC) @PageableDefault(value = 2, page = 0, size = 10) Pageable pageable) throws UserIncorrectDataEntryException {
         return userService.findAllUsersSortedByFirstName(pageable);
     }

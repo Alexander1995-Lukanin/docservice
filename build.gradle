@@ -25,7 +25,7 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok:1.18.24'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.7.2'
-	implementation group: 'org.hibernate', name: 'hibernate-validator', version: '6.0.13.Final'
+	implementation group: 'org.hibernate.validator', name: 'hibernate-validator'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.7.1'
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
 //	testImplementation 'io.projectreactor:reactor-test'

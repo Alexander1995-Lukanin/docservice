@@ -1,74 +1,21 @@
-package com.example.docservice.service;
+package com.example.docservice.webClient.service;
 
 import com.example.docservice.entity.User;
-import com.example.docservice.exception.UserIncorrectDataEntryException;
-import com.example.docservice.exception.UserNotFoundException;
 import com.example.docservice.repository.UserCrudRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.util.retry.Retry;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceIntegrationImpl implements UserServiceIntegration {
     private final UserCrudRepository userRepo;
     private final WebClient webClient;
-
-    @Override
-    public void registrationUser(User user) throws UserIncorrectDataEntryException {
-        if (user == null) {
-            throw new UserIncorrectDataEntryException("Введенны некоректные данные");
-        }
-        userRepo.save(user);
-    }
-
-    @Override
-    public User getUserById(Long userId) throws UserNotFoundException {
-        User user;
-        Optional<User> optional = userRepo.findById(userId);
-        if (optional.isPresent()) {
-            user = optional.get();
-        } else throw new UserNotFoundException("Такого пользователя не существет");
-        return user;
-    }
-
-    @Override
-    public Page<User> getUserAll(Pageable pageable) {
-        return userRepo.findAll(pageable);
-    }
-
-    @Override
-    public Page<User> findAllUsersSortedByFirstName(@SortDefault(sort = "firstName",direction = Sort.Direction.ASC)
-                                                    @PageableDefault(value = 2, page = 0, size = 10) Pageable pageable)
-    {
-        return userRepo.findAll(pageable);
-    }
-
-    @Override
-    public List<User> getUserByLastName(String lastName) {
-        List<User> users = userRepo.findAllByLastName(lastName);
-        return users;
-    }
-
-    @Override
-    public void deleteUser(Long userId) throws UserNotFoundException {
-        if (userRepo.findById(userId).isPresent()) {
-            userRepo.deleteById(userId);
-        } else throw new UserNotFoundException("Такого пользователя не существет");
-    }
 
     //Вынести в отдельный класс разделить на интрефейс. В пекейдж отдельный. Логика в юзер сервисе. Вызывается.
     @Override
