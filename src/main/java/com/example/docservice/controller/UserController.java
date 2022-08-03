@@ -9,14 +9,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@Validated
 public class UserController {
 
     private final UserServiceImpl userService;
@@ -41,16 +45,16 @@ public class UserController {
 
     // Получение всех пользователей
     @GetMapping("/users")
-    public Page<User> getUsers(@PageableDefault(value = 2, page = 0, size = 10) Pageable pageable) {
+    public Page<User> getUsers(@PageableDefault(value = 10, page = 0, size = 10) Pageable pageable) {
         return userService.getUserAll(pageable);
     }
 
     //Spring exception handler посмотреть
     // Удаление пользователя по ID
     @DeleteMapping(("/users/{userId}"))
-    public ResponseEntity<?> DeleteUsers(@PathVariable Long userId) {
+    public ResponseEntity<?> deleteUsers(@PathVariable Long userId) {
             userService.deleteUser(userId);
-        return ResponseEntity.ok("Пользователь успешно зарегистрировася");
+        return ResponseEntity.ok("Пользователь успешно удален");
     }
 
     //Получение пользователя по фамилии
@@ -62,7 +66,7 @@ public class UserController {
 //Сортировки по имени
     @GetMapping("/sorted")
     public Page<User> findAllUsersSortedByName(@Valid @SortDefault(sort = "firstName",
-            direction = Sort.Direction.ASC) @PageableDefault(value = 2, page = 0, size = 10) Pageable pageable) throws UserIncorrectDataEntryException {
+            direction = Sort.Direction.ASC) @PageableDefault(value = 10, page = 0, size = 10) Pageable pageable) throws UserIncorrectDataEntryException {
         return userService.findAllUsersSortedByFirstName(pageable);
     }
 
