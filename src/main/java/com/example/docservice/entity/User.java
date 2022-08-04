@@ -31,12 +31,12 @@ public class User {
     @Size(min = 2, max = 20, message = "Patronymic name should  be between 2 and 20 characters")
     private String lastName;
     //Ленивая загрузка и транзакцииcascade =
-    @NotNull
+//    @NotNull
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userAdd", orphanRemoval = true)
-    @Valid
+//    @Valid
     private List<Address> userAddress;
-    @NotNull
-    @Valid
+//    @NotNull
+//    @Valid
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "userDoc", orphanRemoval = true)
     private Documents userDocuments;
     //Веб клиент

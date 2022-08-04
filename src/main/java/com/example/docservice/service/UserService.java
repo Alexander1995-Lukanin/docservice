@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -31,16 +30,6 @@ public interface UserService {
 
     void deleteUser(Long userId) throws UserNotFoundException;
 
-    //WebClient
-    Mono<User> getUserByIdAsync(final String id);
-
-    User getUserByIdSync(final String id);
-
-    User getUserWithRetry(final String id);
-
-    User getUserWithFallback(final String id);
-
-    User getUserWithErrorHandling(final String id);
 
 }
 

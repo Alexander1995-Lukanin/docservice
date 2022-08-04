@@ -1,8 +1,7 @@
 package com.example.docservice.webClient.service;
 
 import com.example.docservice.entity.User;
-import com.example.docservice.repository.UserCrudRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -11,10 +10,10 @@ import reactor.util.retry.Retry;
 
 import java.time.Duration;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
+//@AllArgsConstructor
 @Service
 public class UserServiceIntegrationImpl implements UserServiceIntegration {
-    private final UserCrudRepository userRepo;
     private final WebClient webClient;
 
     //Вынести в отдельный класс разделить на интрефейс. В пекейдж отдельный. Логика в юзер сервисе. Вызывается.
@@ -22,7 +21,7 @@ public class UserServiceIntegrationImpl implements UserServiceIntegration {
     public Mono<User> getUserByIdAsync(String id) {
         return webClient
                 .get()
-                .uri(String.join("", "/users/", id))
+                .uri(String.join("", "/user/", id))
                 .retrieve()
                 .bodyToMono(User.class);
     }
@@ -31,17 +30,18 @@ public class UserServiceIntegrationImpl implements UserServiceIntegration {
     public User getUserByIdSync(final String id) {
         return webClient
                 .get()
-                .uri(String.join("", "/users/", id))
+                .uri(String.join("", "/user/", id))
                 .retrieve()
                 .bodyToMono(User.class)
                 .block();
     }
+    //Отдельно получает юзера, отдельно сохранение.
 
     @Override
     public User getUserWithRetry(String id) {
         return webClient
                 .get()
-                .uri(String.join("", "/users/", id))
+                .uri(String.join("", "/user/", id))
                 .retrieve()
                 .bodyToMono(User.class)
                 .retryWhen(Retry.fixedDelay(3, Duration.ofMillis(100)))
